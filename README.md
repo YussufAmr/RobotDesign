@@ -11,4 +11,4 @@ Military Head => Hamza Khaled
 
 Counselor => Ali Mohamed
 
-Secretary => Abdullah Said
+Secretary => Abdullah Said (ana rakam wa7d fi elbald dih)
