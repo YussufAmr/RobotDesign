@@ -49,12 +49,6 @@ The repository is structured as follows: 🔍🔠🔃
 
 ### Prerequisites 📊📅🚷
 
-- A C++ compiler (e.g., `g++`)
-- Standard library support for C++11 (or later)
-## Build & Run Instructions 🚷🔧📂
-
-### Prerequisites 📊📅🚷
-
 - Code::Blocks IDE installed (with a working C++ compiler, e.g., `g++` bundled)
 
 ### Setting Up and Running the Project in Code::Blocks 📚🔨🔍
