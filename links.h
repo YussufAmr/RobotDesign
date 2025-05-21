@@ -1,3 +1,5 @@
+
+
 #ifndef LINKS_H
 #define LINKS_H
 
@@ -25,6 +27,12 @@ double link_mass;
 double bending_moment;
 double moment_of_inertia;
 double max_stress;
+int x;
+int z;
+double percent;
+double new_height=height;
+double new_base=base;
+double new_radius=radius;
 
 public:
 links();
@@ -38,9 +46,11 @@ void calc_max_stress();
 void calc_all_data();
 void take_all_inputs();
 void comparison ();
-void print_all_data();
-void optimize_dimensions();
+void dim_print();
+void comparison_with_another_percent ();
+void dim_print_with_percent();
 };
 
 
 #endif // LINKS_H
+
