@@ -1,0 +1,90 @@
+
+#include <iostream>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+void calc_omega(vector<double> x, vector<double>& y) {
+    for (double i : x) {
+        y.push_back((2 * 3.14 * i) / 60.0);
+    }
+}
+
+void print_combination(const vector<vector<vector<double>>>& comb) {
+    for (int i = 0; i < comb.size(); i++) {
+        for (int j = 0; j < comb[i].size(); j++) {
+            cout << "Motor " << i << ", Gear " << j << ":\n";
+            cout << "  Output Torque: " << comb[i][j][0] << " Nm\n";
+            cout << "  Output Omega: " << comb[i][j][1] << " rad/s\n";
+            cout << "  Motor Index: " << comb[i][j][2] << "\n";
+            cout << "  Motor Mass: " << comb[i][j][3] << " kg\n";
+            cout << "  Motor Diameter: " << comb[i][j][4] << " mm\n";
+            cout << "  Motor Width: " << comb[i][j][5] << " mm\n";
+            cout << "  Gear Index: " << comb[i][j][6] << "\n";
+            cout << "  Gear Mass: " << comb[i][j][7] << " kg\n";
+            cout << "  Gear Diameter: " << comb[i][j][8] << " mm\n";
+            cout << "  Gear Width: " << comb[i][j][9] << " mm\n";
+            cout << "----------------------------------\n";
+        }
+    }
+}
+
+int main() {
+    vector<double> motor_torque = {1.33, 3.6, 4.12, 4.53, 5.05, 5.09, 5.45, 6, 6.31, 6.9};
+    vector<double> rpms = {4980, 2430, 5770, 3400, 5450, 4590, 3530, 4510, 3550, 7380};
+    vector<double> masses = {34, 34, 26, 119, 42, 119, 26, 54, 54, 54};
+    vector<double> diameters = {19, 19, 14, 26, 16, 26, 16, 22, 22, 22};
+    vector<double> widths = {28.9, 28.9, 35.6, 44.7, 40.4, 44.7, 26.5, 31.9, 31.9, 31.9};
+    vector<double> efficiencies = {0.72, 0.71, 0.76, 0.81, 0.82, 0.81, 0.76, 0.81, 0.81, 0.73};
+
+    vector<double> gear_ratio = {6, 6.4, 7, 9.1, 10, 12, 13, 15, 18, 22};
+    vector<double> max_gear_effs = {0.81, 0.81, 0.87, 0.81, 0.81, 0.81, 0.73, 0.73, 0.73, 0.73};
+    vector<double> gear_masses = {55, 6, 113, 14, 55, 9, 7, 40, 60, 10};
+    vector<double> gear_diameters = {38, 12, 45, 16, 38, 16, 12, 30, 38, 16};
+    vector<double> gear_widths = {20.6, 10, 24.2, 14.3, 20.6, 11.8, 12, 23, 23.1, 12.8};
+
+    vector<double> omega;
+    calc_omega(rpms, omega);
+
+    const double g = 9.81;
+    double link_mass = 6;
+    double length = 7;
+    double payload_mass = 10;
+    double max_angular_acc = 9;
+
+    double required_torque =
+        (link_mass * g * length / 2) +
+        (payload_mass * g * length) +
+        (link_mass * pow((length / 2), 2) * max_angular_acc) +
+        (payload_mass * pow(length, 2) * max_angular_acc);
+
+    // Initialize comb vector
+    vector<vector<vector<double>>> comb(motor_torque.size(), vector<vector<double>>(gear_ratio.size()));
+
+    for (int i = 0; i < motor_torque.size(); i++) {
+        for (int j = 0; j < gear_ratio.size(); j++) {
+            double motor_omega = (2 * 3.14 * rpms[i]) / 60.0;
+            double output_torque = motor_torque[i] * gear_ratio[j] * max_gear_effs[j];
+            double output_omega = omega[i] / gear_ratio[j];
+
+             //checking function here//
+
+
+            comb[i][j].push_back(output_torque);           // [0]
+            comb[i][j].push_back(output_omega);            // [1]
+            comb[i][j].push_back(i);                       // [2] motor index
+            comb[i][j].push_back(masses[i]);               // [3]
+            comb[i][j].push_back(diameters[i]);            // [4]
+            comb[i][j].push_back(widths[i]);               // [5]
+            comb[i][j].push_back(j);                       // [6] gear index
+            comb[i][j].push_back(gear_masses[j]);          // [7]
+            comb[i][j].push_back(gear_diameters[j]);       // [8]
+            comb[i][j].push_back(gear_widths[j]);          // [9]
+        }
+    }
+
+    // Print all pushed back values
+    print_combination(comb);
+
+    return 0;
+}
