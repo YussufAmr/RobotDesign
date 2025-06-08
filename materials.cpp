@@ -1,3 +1,5 @@
+
+
 #include "materials.h"
 
 
@@ -19,9 +21,9 @@ double density_chosen = 0;
 }
 
 
+
 void materials :: print_table()
 {
-
 
     cout << "\nMaterial name \t Yield strength (MPa)  density (g/cm^3) \n" ; //alway: to know what is the data given in table and unit
     for(int i=0; i<=8; i++)
@@ -109,3 +111,4 @@ void materials :: set_yield_strength_chosen(double new_yield_strength_chosen)
 {
     yield_strength_chosen = new_yield_strength_chosen;
 }
+

@@ -36,7 +36,6 @@ double get_density_chosen();
 double get_yield_strength_chosen();
 void set_density_chosen(double new_density_chosen);
 void set_yield_strength_chosen(double new_yield_strength_chosen);
-
 };
 
 
