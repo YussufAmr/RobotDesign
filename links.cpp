@@ -3,6 +3,7 @@
 #include "links.h"
 #include "materials.h"
 #include "motors.h"
+#include <cmath>
 
 links :: links(){
 
@@ -13,7 +14,7 @@ double radius = 0;
 double link_mass = 0;
 double pay_load_mass=  0;
 double max_angular_acc= 0;
-
+double required_omega = 0;
 }
 
 void links ::  link_cross_section()
@@ -26,15 +27,15 @@ void links ::  link_cross_section()
 
     if(type == 1)
     {
-        cout << "Enter the base length: " << endl;
+        cout << "Enter the base length: (in cm)" << endl;
         cin >> base;
-        cout << "Enter the height length: " << endl;
+        cout << "Enter the height length: (in cm)" << endl;
         cin >> height;
 
     }
     else if(type == 2)
     {
-        cout << "Enter the radius length: " << endl;
+        cout << "Enter the radius length: (in cm)" << endl;
         cin >> radius;
     }
     else
@@ -46,19 +47,18 @@ void links ::  link_cross_section()
 }
 
 void links :: read_remaining_inputs(){
-cout << "Enter the length of the link: " << endl;
+cout << "Enter the length of the link: (in cm)" << endl;
 cin >> length;
 
-cout << "Enter the payload mass: " << endl;
+cout << "Enter the payload mass: (in gram)" << endl;
 cin >> payload_mass;
 
-cout << "Enter the maximum angular acceleration: " << endl;
+cout << "Enter the maximum angular acceleration: (in rad/s^2)" << endl;
 cin >> max_angular_acc;
 
-cout << "Enter the required angular velocity: " << endl;
-double added_omega;
-cin >> added_omega;
-m1.set_omega_required(added_omega);
+cout << "Enter the required angular velocity: (in rad/s)" << endl;
+cin >> required_omega;
+//m1.set_omega_required(required_omega);
 
     used_material.print_table();
     used_material.select_material();
@@ -68,44 +68,44 @@ void links :: calc_mass_link()
     {
         if(type == 1)
         {
-            link_mass = base*height*length*used_material.get_density_chosen();
+            link_mass = (base/100)*(height/100)*(length/100)*(used_material.get_density_chosen()*1000);
         }
         else
-            link_mass = PI*radius*radius*length*used_material.get_density_chosen();
+            link_mass = PI*pow(radius/100,2)*(length/100)*(used_material.get_density_chosen()*1000);
     }
 
 void links :: calc_bending_moment()
     {
-        bending_moment = link_mass * g * (length/2) + (payload_mass * g * length) +
-        (link_mass * pow(length/2 , 2) * max_angular_acc + payload_mass * pow(length, 2) * max_angular_acc);
+        bending_moment = link_mass * g * (length/200) + ((payload_mass/1000) * g * length) +
+        (link_mass * pow(length/200 , 2)) * (max_angular_acc + (payload_mass/1000) * pow(length/100, 2)) * max_angular_acc;
     }
 
 void links :: calc_moment_of_inertia()
     {
         if(type == 1)
         {
-            moment_of_inertia = base * pow(height ,3) / 12;
+            moment_of_inertia = (base/100) * pow(height/100 ,3) / 12;
         }
         else
-            moment_of_inertia = PI * pow(radius, 4) /4;
+            moment_of_inertia = PI * pow(radius/100, 4) /4;
     }
 
 void links :: calc_max_stress()
     {
         if(type == 1)
         {
-            max_stress = ( bending_moment * height ) / ( 2 * moment_of_inertia );
+            max_stress = ( bending_moment * (height/100) ) / (( 2 * moment_of_inertia )*(pow(10,6)));
         }
         else
-            max_stress = ( bending_moment * radius ) / moment_of_inertia;
+            max_stress = ( bending_moment * (radius/100) ) / (moment_of_inertia*(pow(10,6)));
     }
 
 void links :: comparison ()//checking stress & optimizing dimensions
     {
-        if(max_stress > used_material.get_yield_strength_chosen() )
+        if(max_stress > used_material.get_yield_strength_chosen())
           {
             x=1;
-            while(max_stress > used_material.get_yield_strength_chosen() )
+            while(max_stress > used_material.get_yield_strength_chosen())
             {
                 if (type==1)//rectangle
                 {
@@ -124,14 +124,14 @@ void links :: comparison ()//checking stress & optimizing dimensions
             }
           }
 
-        if(max_stress < used_material.get_yield_strength_chosen() )
+        if(max_stress < used_material.get_yield_strength_chosen())
         {
             new_height=height;
             new_base=base;
             new_radius=radius;
             x=2;
             new_max_stress=max_stress;
-            while(max_stress < used_material.get_yield_strength_chosen() )
+            while(max_stress < used_material.get_yield_strength_chosen())
             {
                 if (type==1)//rectangle
                 {
@@ -194,19 +194,19 @@ void links :: dim_print()//print all outputs
 {
     if(type == 1)
     {
-        cout << "\nbase = " << base << endl;
-        cout << "height = " << height << endl;
-        cout << "Link Mass = " << link_mass << endl;
-        cout << "The Bending Moment = " << bending_moment << endl;
-        cout << "Moment of Inertia = " << moment_of_inertia << endl;
-        cout << "Maximum Stress = " << max_stress << endl;
+        cout << "\nbase = " << base << " cm" << endl;
+        cout << "height = " << height <<" cm" <<  endl;
+        cout << "Link Mass = " << link_mass <<" kg" <<  endl;
+        cout << "The Bending Moment = " << bending_moment <<" N.m" <<  endl;
+        cout << "Moment of Inertia = " << moment_of_inertia << " m^4" << endl;
+        cout << "Maximum Stress = " << max_stress <<" MPa" <<  endl;
     }
     else
-        cout << "\nradius = " << radius << endl;
-        cout << "Link Mass = " << link_mass << endl;
-        cout << "The Bending Moment = " << bending_moment << endl;
-        cout << "Moment of Inertia = " << moment_of_inertia << endl;
-        cout << "Maximum Stress = " << max_stress << endl;
+        cout << "\nradius = " << radius <<" cm" <<  endl;
+        cout << "Link Mass = " << link_mass <<" kg" <<  endl;
+        cout << "The Bending Moment = " << bending_moment <<" N.m" <<  endl;
+        cout << "Moment of Inertia = " << moment_of_inertia <<" m^4" <<  endl;
+        cout << "Maximum Stress = " << max_stress <<" MPa" <<  endl;
 }
 void links :: dim_print_with_percent()//print all outputs
 {
@@ -273,4 +273,9 @@ double links :: get_payload_mass() const
 double links :: get_link_mass() const
 {
     return link_mass;
+}
+
+double links :: get_required_omega() const
+{
+    return required_omega;
 }

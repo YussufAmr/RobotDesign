@@ -80,7 +80,7 @@ void  calc_omega(vector<double> x, vector<double>& y);
 void  print_combinations(const vector<vector<vector<double>>>& comb);
 void  calc_required_torque(const links& link1);
 void  print_required_torque();
-void  initialize_combinations();
+void  initialize_combinations(const links& link1);
 
 void mass_optimization (const vector<vector<vector<double>>>& comb);
 void cost_optimization (const vector<vector<vector<double>>>& comb);
