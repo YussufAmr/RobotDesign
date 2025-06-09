@@ -56,8 +56,9 @@ cout << "Enter the maximum angular acceleration: " << endl;
 cin >> max_angular_acc;
 
 cout << "Enter the required angular velocity: " << endl;
-cin >> omega_required;
-
+double added_omega;
+cin >> added_omega;
+m1.set_omega_required(added_omega);
 
     used_material.print_table();
     used_material.select_material();

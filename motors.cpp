@@ -185,8 +185,6 @@ void motors :: initialize_combinations()
 {
     comb = vector<vector<vector<double>>> (torques.size(), vector<vector<double>>(gear_ratios.size()));
 
-    cout << "Enter the required angular velocity: " << endl;
-    cin >> omega_required;
     cout << "The Required Angular Velocity = " << omega_required << "\n" <<endl;
 
     int valid_combinations = 0;
@@ -198,7 +196,7 @@ void motors :: initialize_combinations()
             omega_output = omega_motor / gear_ratios[j];
 
 
-            if( /*torque_output> torque_required &&*/ omega_output > omega_required){
+            if( torque_output> torque_required && omega_output > omega_required){
 
                 total_masses = masses [i] + gear_masses [j];
                 total_diameter = diameters [i] + gear_diameters [j];
