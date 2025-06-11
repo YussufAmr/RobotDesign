@@ -38,6 +38,7 @@ double new_base;
 double new_radius;
 double new_max_stress;
 
+public:
 void handling_invalid_inputs();
 
 links();

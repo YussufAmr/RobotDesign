@@ -1,0 +1,37 @@
+# depslib dependency file v1.0
+1749672828 source:c:\users\hamoz\desktop\robotdesign-aly-abdullah\links.cpp
+	<iostream>
+	"links.h"
+	"materials.h"
+	"motors.h"
+	<limits>
+	<cmath>
+
+1749671169 c:\users\hamoz\desktop\robotdesign-aly-abdullah\links.h
+	<iostream>
+	<cmath>
+	"materials.h"
+	"motors.h"
+
+1749670975 c:\users\hamoz\desktop\robotdesign-aly-abdullah\materials.h
+	<iostream>
+	<string>
+	<vector>
+
+1749670975 c:\users\hamoz\desktop\robotdesign-aly-abdullah\motors.h
+	<iostream>
+	<vector>
+
+1749670975 source:c:\users\hamoz\desktop\robotdesign-aly-abdullah\materials.cpp
+	"materials.h"
+	"materials.h"
+	<limits>
+
+1749670975 source:c:\users\hamoz\desktop\robotdesign-aly-abdullah\main.cpp
+	"links.h"
+
+1749673855 source:c:\users\hamoz\desktop\robotdesign-aly-abdullah\motors.cpp
+	<iostream>
+	"motors.h"
+	"links.h"
+
