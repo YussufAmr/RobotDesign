@@ -15,6 +15,7 @@ motors :: motors()
     double width = 0;
     double effeciency = 0;
     int adding_choice = 0;
+    int x=0;
 
 
  torques = {1.33, 3.6, 4.12, 4.53, 5.05, 5.09, 5.45, 6, 6.31, 6.9};
@@ -231,8 +232,10 @@ void motors :: initialize_combinations(const links& link1)
         cout << "1. Lowering the required angular velocity" << endl;
         cout << "2. Adding motors with higher RPM" << endl;
         cout << "3. Adding gearboxes with lower gear ratios" << endl;
+        x=1;
     } else {
         cout << "\nTotal valid combinations found: " << valid_combinations << endl;
+        x=0;
     }
 }
 
@@ -248,12 +251,12 @@ void motors :: print_combinations(const vector<vector<vector<double>>>& comb)
                 cout << "Motor " << i+1 << ", Gear " << j+1 << ":\n";
                 cout << "  Output Torque: " << comb[i][j][0] << " Nm\n";
                 cout << "  Output Omega: " << comb[i][j][1] << " rad/s\n";
-                cout << "  Motor Index: " << comb[i][j][2] << "\n";
+                cout << "  Motor Index: " << (comb[i][j][2])+1 << "\n";
                 cout << "  Combination Mass: " << comb[i][j][3] << " kg\n";
                 cout << "  Combination Diameter: " << comb[i][j][4] << " mm\n";
                 cout << "  Combination Width: " << comb[i][j][5] << " mm\n";
-                cout << "  Gear Index: " << comb[i][j][6] << "\n";
-                cout << "  cost : " << comb[i][j][7] << "\n";
+                cout << "  Gear Index: " << (comb[i][j][6])+1 << "\n";
+                cout << "  cost : " << comb[i][j][7] << " $"<<"\n";
 
                 cout << "----------------------------------\n";
 
@@ -275,11 +278,14 @@ void motors :: mass_optimization (const vector<vector<vector<double>>>& comb)
     best_cost = INT_MAX;
 
      for (int i = 0; i < torques.size(); i++) {
-            for (int j = 0; j < gear_ratios.size(); j++) {
-     if(!comb[i][j].empty())
-      cost = comb [i][j][3] ;
-     if (cost <= best_cost ) {  best_cost = cost ; opt_motor = i ;  opt_gear = j  ;}
-            }
+            for (int j = 0; j < gear_ratios.size(); j++)
+                {
+                     if(!comb[i][j].empty())
+                     {
+                      cost = comb [i][j][3] ;
+                     if (cost <= best_cost ) {  best_cost = cost ; opt_motor = i ;  opt_gear = j  ;}
+                     }
+                }
      }
 }
 void motors :: cost_optimization (const vector<vector<vector<double>>>& comb)
@@ -287,11 +293,15 @@ void motors :: cost_optimization (const vector<vector<vector<double>>>& comb)
 
     best_cost= INT_MAX;
 
-    for (int i = 0; i < torques.size(); i++) {
-            for (int j = 0; j < gear_ratios.size(); j++) {
-     if(!comb[i][j].empty())
-        cost = comb [i][j][3] + (comb [i][j][4] /100) + (comb [i][j][5] /100);
-     if (cost <= best_cost ) {  best_cost = cost ;    opt_motor = i  ;  opt_gear = j  ;}
+    for (int i = 0; i < torques.size(); i++)
+        {
+            for (int j = 0; j < gear_ratios.size(); j++)
+            {
+                 if(!comb[i][j].empty())
+                 {
+                    cost = comb [i][j][3] + (comb [i][j][4] /100) + (comb [i][j][5] /100);
+                 if (cost <= best_cost ) {  best_cost = cost ;    opt_motor = i  ;  opt_gear = j  ;}
+                 }
             }
         }
 
@@ -299,36 +309,40 @@ void motors :: cost_optimization (const vector<vector<vector<double>>>& comb)
 
 void motors :: optimization_selection()
 {
+    if(x==1)
+    {
+        return;
+    }
     int choice;
     cout << "\t \t \t OPTIMIZATION \n Enter \" 1 \" to optimize based on mass \n Enter \" 2 \" to optimize based on cost \n \t";
     cin >> choice ;
     if (choice == 1 ) {
             mass_optimization ( comb);
-            cout << "combination of least mass = " << best_cost <<endl;
- cout << "Motor " << opt_motor+1 << ", Gear " << opt_gear+1 << ":\n";
+            cout << "combination of least mass = " << best_cost <<" Kg"<<endl;
+            cout << "Motor " << opt_motor+1 << ", Gear " << opt_gear+1 << ":\n";
             cout << "  Output Torque: " << comb[opt_motor][opt_gear][0] << " Nm\n";
             cout << "  Output Omega: " << comb[opt_motor][opt_gear][1] << " rad/s\n";
-            cout << "  Motor Index: " << comb[opt_motor][opt_gear][2] << "\n";
+            cout << "  Motor Index: " << (comb[opt_motor][opt_gear][2])+1 << "\n";
             cout << "  Combination Mass: " << comb[opt_motor][opt_gear][3] << " kg\n";
             cout << "  Combination Diameter: " << comb[opt_motor][opt_gear][4] << " mm\n";
             cout << "  Combination Width: " << comb[opt_motor][opt_gear][5] << " mm\n";
-            cout << "  Gear Index: " << comb[opt_motor][opt_gear][6] << "\n";
-            cout << "  cost : " << comb[opt_motor][opt_gear][7] << "\n";
+            cout << "  Gear Index: " << (comb[opt_motor][opt_gear][6])+1 << "\n";
+            cout << "  cost : " << comb[opt_motor][opt_gear][7] << " $"<<"\n";
 
     }
 
      if (choice == 2 ) {
             cost_optimization (comb);
-            cout << "combination of least cost = " <<  best_cost <<endl;
+            cout << "combination of least cost = " <<  best_cost <<" $"<<endl;
              cout << "Motor " << opt_motor+1 << ", Gear " << opt_gear+1 << ":\n";
             cout << "  Output Torque: " << comb[opt_motor][opt_gear][0] << " Nm\n";
             cout << "  Output Omega: " << comb[opt_motor][opt_gear][1] << " rad/s\n";
-            cout << "  Motor Index: " << comb[opt_motor][opt_gear][2] << "\n";
+            cout << "  Motor Index: " << (comb[opt_motor][opt_gear][2])+1 << "\n";
             cout << "  Combination Mass: " << comb[opt_motor][opt_gear][3] << " kg\n";
             cout << "  Combination Diameter: " << comb[opt_motor][opt_gear][4] << " mm\n";
             cout << "  Combination Width: " << comb[opt_motor][opt_gear][5] << " mm\n";
-            cout << "  Gear Index: " << comb[opt_motor][opt_gear][6] << "\n";
-            cout << "  cost : " << comb[opt_motor][opt_gear][7] << "\n";
+            cout << "  Gear Index: " << (comb[opt_motor][opt_gear][6])+1 << "\n";
+            cout << "  cost : " << comb[opt_motor][opt_gear][7] <<" $"<< "\n";
 
     }
 
@@ -340,6 +354,7 @@ vector<vector<vector<double>>> motors :: get_comb()
 {
     return comb;
 }
+
 
 
 /*void  motors :: set_omega_required(double new_omega_required)

@@ -334,7 +334,7 @@ void links :: comparison_with_another_percent ()//checking stress & optimizing d
        }
         if(z==1)
         {
-            cout <<"Enter percent"<<endl;
+            cout <<"Enter percent in %"<<endl;
             cin>>percent;
 
                     if(cin.fail())
@@ -353,6 +353,7 @@ void links :: comparison_with_another_percent ()//checking stress & optimizing d
             cin >> percent;
 
 
+
         }
        }
         }
@@ -360,7 +361,8 @@ void links :: comparison_with_another_percent ()//checking stress & optimizing d
 
         if(z==1)
         {
-            cout<<"\nWe increased dimension by "<<percent<<" in iteration\nThe new dimension:"<<endl;
+            percent/=100;
+            cout<<"\nWe increased dimension by "<<(percent*100)<<"% in iteration\nThe new dimension:"<<endl;
             while(new_max_stress < used_material.get_yield_strength_chosen() /*||z==1*/ )
 
             {
@@ -412,11 +414,13 @@ void links :: dim_print()//print all outputs
         cout << "Maximum Stress = " << max_stress <<" MPa" <<  endl;
     }
     else
+    {
         cout << "\nradius = " << radius <<" cm" <<  endl;
         cout << "Link Mass = " << link_mass <<" kg" <<  endl;
         cout << "The Bending Moment = " << bending_moment <<" N.m" <<  endl;
         cout << "Moment of Inertia = " << moment_of_inertia <<" m^4" <<  endl;
         cout << "Maximum Stress = " << max_stress <<" MPa" <<  endl;
+    }
 }
 void links :: dim_print_with_percent()//print all outputs
 {
@@ -424,20 +428,20 @@ void links :: dim_print_with_percent()//print all outputs
     {
         if(type == 1)
         {
-            cout << "\nbase = " << base << endl;
-            cout << "height = " << height << endl;
-            cout << "Link Mass = " << link_mass << endl;
-            cout << "The Bending Moment = " << bending_moment << endl;
-            cout << "Moment of Inertia = " << moment_of_inertia << endl;
-            cout << "Maximum Stress = " << max_stress << endl;
+            cout << "\nbase = " << base << " cm" << endl;
+            cout << "height = " << height <<" cm" <<  endl;
+            cout << "Link Mass = " << link_mass <<" kg" <<  endl;
+            cout << "The Bending Moment = " << bending_moment <<" N.m" <<  endl;
+            cout << "Moment of Inertia = " << moment_of_inertia << " m^4" << endl;
+            cout << "Maximum Stress = " << max_stress <<" MPa" <<  endl;
         }
         else
         {
-            cout << "\nradius = " << radius << endl;
-            cout << "Link Mass = " << link_mass << endl;
-            cout << "The Bending Moment = " << bending_moment << endl;
-            cout << "Moment of Inertia = " << moment_of_inertia << endl;
-            cout << "Maximum Stress = " << max_stress << endl;
+            cout << "\nradius = " << radius <<" cm" <<  endl;
+            cout << "Link Mass = " << link_mass <<" kg" <<  endl;
+            cout << "The Bending Moment = " << bending_moment <<" N.m" <<  endl;
+            cout << "Moment of Inertia = " << moment_of_inertia <<" m^4" <<  endl;
+            cout << "Maximum Stress = " << max_stress <<" MPa" <<  endl;
         }
     }
 }
@@ -460,6 +464,29 @@ void links :: take_all_inputs()
 {
 link_cross_section();
 read_remaining_inputs();
+}
+void links :: project()
+{
+    int x;
+    do
+    {
+    links link1;
+    materials used_materials;
+    motors m1;
+
+    link1.take_all_inputs();
+    link1.calc_all_data();
+
+    m1.print_motors();
+    m1.calc_required_torque(link1);
+    m1.print_required_torque();
+    m1.initialize_combinations(link1);
+    m1.print_combinations(m1.get_comb());
+    m1.optimization_selection();
+    cout<<"\n\nIf you want to make another trial, press 1 if not press 0\n"<<endl;
+    cin>>x;
+    }
+    while (x==1);
 }
 
 

@@ -65,6 +65,7 @@ double cost;
 double best_cost;
 int opt_motor;
 int opt_gear;
+int x;
 
 public:
 
@@ -89,8 +90,7 @@ void cost_optimization (const vector<vector<vector<double>>>& comb);
 void optimization_selection();
 
 vector<vector<vector<double>>> get_comb();
-void  set_omega_required(double new_omega_required);
-
+void set_omega_required(double new_omega_required);
 };
 
 #endif // MOTORS_H

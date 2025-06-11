@@ -60,7 +60,7 @@ double get_payload_mass() const;
 double get_max_angular_acc() const;
 double get_link_mass() const;
 double get_required_omega() const;
-
+void project();
 };
 
 
