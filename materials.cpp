@@ -1,4 +1,7 @@
 
+#include "materials.h"
+
+
 
 #include "materials.h"
 #include<limits>
@@ -31,6 +34,7 @@ void materials :: handling_invalid_inputs_2()
 
 }
 }
+
 
 void materials :: print_table()
 {

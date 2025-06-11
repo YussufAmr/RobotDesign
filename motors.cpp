@@ -167,10 +167,12 @@ void motors :: calc_required_torque(const links& link1)
     double max_acc = link1.get_max_angular_acc();
 
     torque_required =
-        (link_mass * g * (length / 2)) +
-        (payload_mass * g * length) +
-        (link_mass * pow((length / 2), 2) * max_acc) +
-        (payload_mass * pow(length, 2) * max_acc);
+
+        (link_mass * g * (length / 200)) +
+        ((payload_mass/100) * g * (length / 100)) +
+        (link_mass * pow((length / 200), 2) * max_acc) +
+        ((payload_mass/100) * pow((length / 100), 2) * max_acc);
+
 }
 
 void motors :: print_required_torque()
@@ -181,11 +183,13 @@ void motors :: print_required_torque()
 
 
 
-void motors :: initialize_combinations()
+
+void motors :: initialize_combinations(const links& link1)
 {
     comb = vector<vector<vector<double>>> (torques.size(), vector<vector<double>>(gear_ratios.size()));
 
-    cout << "The Required Angular Velocity = " << omega_required << "\n" <<endl;
+    cout << "The Required Angular Velocity = " << link1.get_required_omega() << "\n" <<endl;
+
 
     int valid_combinations = 0;
 
@@ -196,7 +200,9 @@ void motors :: initialize_combinations()
             omega_output = omega_motor / gear_ratios[j];
 
 
-            if( torque_output> torque_required && omega_output > omega_required){
+
+            if( torque_output> torque_required && omega_output > link1.get_required_omega()){
+
 
                 total_masses = masses [i] + gear_masses [j];
                 total_diameter = diameters [i] + gear_diameters [j];
@@ -265,7 +271,9 @@ void motors :: print_combinations(const vector<vector<vector<double>>>& comb)
 
 void motors :: mass_optimization (const vector<vector<vector<double>>>& comb)
 {
-    best_cost = 40000000;
+
+    best_cost = INT_MAX;
+
      for (int i = 0; i < torques.size(); i++) {
             for (int j = 0; j < gear_ratios.size(); j++) {
      cost = comb [i][j][3] ;
@@ -275,7 +283,9 @@ void motors :: mass_optimization (const vector<vector<vector<double>>>& comb)
 }
 void motors :: cost_optimization (const vector<vector<vector<double>>>& comb)
 {
-    best_cost= 40000000;
+
+    best_cost= INT_MAX;
+
     for (int i = 0; i < torques.size(); i++) {
             for (int j = 0; j < gear_ratios.size(); j++) {
      cost = comb [i][j][3] + (comb [i][j][4] /100) + (comb [i][j][5] /100);

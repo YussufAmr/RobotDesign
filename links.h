@@ -24,6 +24,7 @@ double radius;
 double length;
 double payload_mass;
 double max_angular_acc;
+double required_omega;
 
 double link_mass;
 double bending_moment;
@@ -37,10 +38,8 @@ double new_base;
 double new_radius;
 double new_max_stress;
 
-
-public:
-
 void handling_invalid_inputs();
+
 links();
 void link_cross_section();
 void read_remaining_inputs();
@@ -59,6 +58,8 @@ double get_length() const;
 double get_payload_mass() const;
 double get_max_angular_acc() const;
 double get_link_mass() const;
+double get_required_omega() const;
+
 };
 
 
