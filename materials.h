@@ -29,6 +29,7 @@ double density_chosen;
 public:
 
 materials();
+void  handling_invalid_inputs_2();
 void print_table();
 void add_new_material();
 void select_material();
