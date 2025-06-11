@@ -178,28 +178,27 @@ cin >> max_angular_acc;
        }
 
 cout << "Enter the required angular velocity: (in rad/s)" << endl;
-double added_omega;
-cin >> added_omega;
+cin >> required_omega;
 
         if(cin.fail())
         {
             handling_invalid_inputs();
-            cin >> added_omega;
+            cin >> required_omega;
         }
-       else if(added_omega <= 0)
+       else if(required_omega <= 0)
        {
-                while(added_omega<=0)
+                while(required_omega<=0)
         {
             cout << "error! Enter a valid number" << endl;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cin >> added_omega;
+            cin >> required_omega;
 
 
         }
        }
 
-//m1.set_omega_required(added_omega);
+//m1.set_omega_required(required_omega);
 
 
     used_material.print_table();

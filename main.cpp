@@ -1,7 +1,5 @@
 
-
 #include "links.h"
-
 
 int main()
 {
@@ -15,11 +13,11 @@ int main()
     m1.print_motors();
     m1.calc_required_torque(link1);
     m1.print_required_torque();
-  
+
     m1.initialize_combinations(link1);
     m1.print_combinations(m1.get_comb());
 
-  
+
     m1.optimization_selection();
 
     return 0;
