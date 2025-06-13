@@ -414,10 +414,10 @@ void motors :: calc_required_torque(const links& link1)
 
     torque_required =
 
-        (link_mass * g * (length / 200)) +
-        ((payload_mass/1000) * g * (length / 100)) +
-        (link_mass * pow((length / 200), 2) * max_acc) +
-        ((payload_mass/1000) * pow((length / 100), 2) * max_acc);
+        (link_mass * g * (length / 2000)) +
+        ((payload_mass/1000) * g * (length / 1000)) +
+        (link_mass * pow((length / 2000), 2) * max_acc) +
+        ((payload_mass/1000) * pow((length / 1000), 2) * max_acc);
 
 }
 
@@ -435,6 +435,8 @@ void motors :: initialize_combinations(const links& link1)
     comb = vector<vector<vector<double>>> (torques.size(), vector<vector<double>>(gear_ratios.size()));
 
     cout << "The Required Angular Velocity = " << link1.get_required_omega() << "\n" <<endl;
+
+    cout << "     ------------------ Checking valid combinations process  ------------------ \n"<< endl;
 
 
     valid_combinations = 0;
@@ -481,6 +483,7 @@ void motors :: initialize_combinations(const links& link1)
 
     } else {
         cout << "\nTotal valid combinations found: " << valid_combinations << endl;
+        cout << "\n   ------------------------------------------------------ \n"<< endl;
     }
 }
 
@@ -514,6 +517,7 @@ void motors :: print_combinations(const vector<vector<vector<double>>>& comb)
         cout << "\nNo valid combinations to display." << endl;
     } else {
         cout << "\nTotal combinations displayed: " << printed_count << endl;
+
     }
 }
 
@@ -555,7 +559,7 @@ void motors :: cost_optimization (const vector<vector<vector<double>>>& comb)
 
 void motors :: optimization_selection()
 {
-    if(valid_combinations == 0)
+    if(valid_combinations == 0 || valid_combinations == 1)
     {
         return;
     }

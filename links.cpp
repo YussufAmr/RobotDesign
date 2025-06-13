@@ -32,8 +32,7 @@ void links :: handling_invalid_inputs_types()
 void links ::  link_cross_section()
 {
 
-    cout << "\t\t --Welcome to Single-Link Robot Design and Optimization Program--\n\n"
-    <<"Please, Select the number of the type of your link cross section area: " << endl;
+    cout<<"\nPlease, Select the number of the type of your link cross section area: " << endl;
     cout << "1- Rectangle" << endl;
     cout << "2- Circle" << endl;
     cin >> type;
@@ -51,7 +50,7 @@ void links ::  link_cross_section()
 
     else if(type == 1)
     {
-        cout << "Enter the base length: (in cm)" << endl;
+        cout << "Enter the base length: (in mm)" << endl;
         cin >> base;
 
         if(cin.fail())
@@ -72,7 +71,7 @@ void links ::  link_cross_section()
         }
        }
 
-        cout << "Enter the height length: (in cm)" << endl;
+        cout << "Enter the height length: (in mm)" << endl;
 
         cin >> height;
 
@@ -97,7 +96,7 @@ void links ::  link_cross_section()
     }
     else if(type == 2)
     {
-        cout << "Enter the radius length: (in cm)" << endl;
+        cout << "Enter the radius length: (in mm)" << endl;
         cin >> radius;
 
                 if(cin.fail())
@@ -121,7 +120,7 @@ void links ::  link_cross_section()
 
 void links :: read_remaining_inputs()
 {
-cout << "Enter the length of the link: (in cm)" << endl;
+cout << "Enter the length of the link: (in mm)" << endl;
 cin >> length;
 
         if(cin.fail())
@@ -207,36 +206,36 @@ void links :: calc_mass_link()
     {
         if(type == 1)
         {
-            link_mass = (base/100)*(height/100)*(length/100)*(used_material.get_density_chosen()*1000);
+            link_mass = (base/1000)*(height/1000)*(length/1000)*(used_material.get_density_chosen()*1000);
         }
         else
-            link_mass = PI*pow(radius/100,2)*(length/100)*(used_material.get_density_chosen()*1000);
+            link_mass = PI*pow(radius/1000,2)*(length/1000)*(used_material.get_density_chosen()*1000);
     }
 
 void links :: calc_bending_moment()
     {
-        bending_moment = link_mass * g * (length/200) + ((payload_mass/1000) * g * length) +
-        (link_mass * pow(length/200 , 2)) * (max_angular_acc + (payload_mass/1000) * pow(length/100, 2)) * max_angular_acc;
+        bending_moment = link_mass * g * (length/2000) + ((payload_mass/1000) * g * length/1000) +
+        (((link_mass * pow(length/2000 , 2)) * max_angular_acc) + (payload_mass/1000 * pow(length/1000, 2) * max_angular_acc));
     }
 
 void links :: calc_moment_of_inertia()
     {
         if(type == 1)
         {
-            moment_of_inertia = (base/100) * pow(height/100 ,3) / 12;
+            moment_of_inertia = (base/1000) * pow(height/1000 ,3) / 12;
         }
         else
-            moment_of_inertia = PI * pow(radius/100, 4) /4;
+            moment_of_inertia = PI * pow(radius/1000, 4) /4;
     }
 
 void links :: calc_max_stress()
     {
         if(type == 1)
         {
-            max_stress = ( bending_moment * (height/100) ) / (( 2 * moment_of_inertia )*(pow(10,6)));
+            max_stress = ( bending_moment * (height/1000) ) / (( 2 * moment_of_inertia )*(pow(10,6)));
         }
         else
-            max_stress = ( bending_moment * (radius/100) ) / (moment_of_inertia*(pow(10,6)));
+            max_stress = ( bending_moment * (radius/1000) ) / (moment_of_inertia*(pow(10,6)));
     }
 
 void links :: comparison ()//checking stress & optimizing dimensions
@@ -401,19 +400,19 @@ void links :: dim_print()//print all outputs
 {
     if(type == 1)
     {
-        cout << "\nbase = " << base << " cm" << endl;
-        cout << "height = " << height <<" cm" <<  endl;
-        cout << "Link Mass = " << link_mass <<" kg" <<  endl;
+        cout << "\nbase = " << base << " mm" << endl;
+        cout << "height = " << height <<" mm" <<  endl;
+        cout << "Link Mass = " << link_mass*1000 <<" gram" <<  endl;
         cout << "The Bending Moment = " << bending_moment <<" N.m" <<  endl;
-        cout << "Moment of Inertia = " << moment_of_inertia << " m^4" << endl;
+        cout << "Moment of Inertia = " << moment_of_inertia*pow(10,12) << " mm^4" << endl;
         cout << "Maximum Stress = " << max_stress <<" MPa" <<  endl;
     }
     else
     {
-        cout << "\nradius = " << radius <<" cm" <<  endl;
-        cout << "Link Mass = " << link_mass <<" kg" <<  endl;
+        cout << "\nradius = " << radius <<" mm" <<  endl;
+        cout << "Link Mass = " << link_mass*1000 <<" gram" <<  endl;
         cout << "The Bending Moment = " << bending_moment <<" N.m" <<  endl;
-        cout << "Moment of Inertia = " << moment_of_inertia <<" m^4" <<  endl;
+        cout << "Moment of Inertia = " << moment_of_inertia*pow(10,12) <<" mm^4" <<  endl;
         cout << "Maximum Stress = " << max_stress <<" MPa" <<  endl;
     }
 }
@@ -423,19 +422,19 @@ void links :: dim_print_with_percent()//print all outputs with user percent
     {
         if(type == 1)
         {
-            cout << "\nbase = " << base << " cm" << endl;
-            cout << "height = " << height <<" cm" <<  endl;
-            cout << "Link Mass = " << link_mass <<" kg" <<  endl;
+            cout << "\nbase = " << base << " mm" << endl;
+            cout << "height = " << height <<" mm" <<  endl;
+            cout << "Link Mass = " << link_mass*1000 <<" gram" <<  endl;
             cout << "The Bending Moment = " << bending_moment <<" N.m" <<  endl;
-            cout << "Moment of Inertia = " << moment_of_inertia << " m^4" << endl;
+            cout << "Moment of Inertia = " << moment_of_inertia*pow(10,12) << " mm^4" << endl;
             cout << "Maximum Stress = " << max_stress <<" MPa" <<  endl;
         }
         else
         {
-            cout << "\nradius = " << radius <<" cm" <<  endl;
-            cout << "Link Mass = " << link_mass <<" kg" <<  endl;
+            cout << "\nradius = " << radius <<" mm" <<  endl;
+            cout << "Link Mass = " << link_mass*1000 <<" gram" <<  endl;
             cout << "The Bending Moment = " << bending_moment <<" N.m" <<  endl;
-            cout << "Moment of Inertia = " << moment_of_inertia <<" m^4" <<  endl;
+            cout << "Moment of Inertia = " << moment_of_inertia*pow(10,12) <<" mm^4" <<  endl;
             cout << "Maximum Stress = " << max_stress <<" MPa" <<  endl;
         }
     }
@@ -465,6 +464,7 @@ void links :: project()
     int x;
     do
     {
+    cout << "\t\t --Welcome to Single-Link Robot Design and Optimization Program--\n"<<endl;
     links link1;
     materials used_materials;
     motors m1;
