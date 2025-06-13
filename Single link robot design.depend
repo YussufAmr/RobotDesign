@@ -1,0 +1,38 @@
+# depslib dependency file v1.0
+1749817527 source:c:\users\ali\onedrive\desktop\spring 25\fundumentals of computer programming\project\new folder (2)\robotdesign--\materials.cpp
+	"materials.h"
+	"materials.h"
+	<limits>
+
+1749817507 c:\users\ali\onedrive\desktop\spring 25\fundumentals of computer programming\project\new folder (2)\robotdesign--\materials.h
+	<iostream>
+	<string>
+	<vector>
+
+1749817459 source:c:\users\ali\onedrive\desktop\spring 25\fundumentals of computer programming\project\new folder (2)\robotdesign--\links.cpp
+	<iostream>
+	"links.h"
+	"materials.h"
+	"motors.h"
+	<limits>
+	<cmath>
+
+1749817346 c:\users\ali\onedrive\desktop\spring 25\fundumentals of computer programming\project\new folder (2)\robotdesign--\links.h
+	<iostream>
+	<cmath>
+	"materials.h"
+	"motors.h"
+
+1749817507 c:\users\ali\onedrive\desktop\spring 25\fundumentals of computer programming\project\new folder (2)\robotdesign--\motors.h
+	<iostream>
+	<vector>
+
+1749812943 source:c:\users\ali\onedrive\desktop\spring 25\fundumentals of computer programming\project\new folder (2)\robotdesign--\main.cpp
+	"links.h"
+
+1749817237 source:c:\users\ali\onedrive\desktop\spring 25\fundumentals of computer programming\project\new folder (2)\robotdesign--\motors.cpp
+	<iostream>
+	"motors.h"
+	"links.h"
+	<limits>
+

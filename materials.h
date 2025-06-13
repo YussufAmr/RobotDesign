@@ -29,6 +29,7 @@ double density_chosen;
 public:
 
 materials();
+void  handling_invalid_inputs_types_2();
 void print_table();
 void add_new_material();
 void select_material();
@@ -36,7 +37,6 @@ double get_density_chosen();
 double get_yield_strength_chosen();
 void set_density_chosen(double new_density_chosen);
 void set_yield_strength_chosen(double new_yield_strength_chosen);
-
 };
 
 
