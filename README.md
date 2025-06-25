@@ -22,8 +22,9 @@ This project demonstrates the integration of mechanical engineering principles w
 ### Part 2: Motor and Gearbox Selection
 - Calculate required torque and speed specifications
 - Evaluate all possible motor-gearbox combinations
-- Optimize selection based on user-defined criteria (mass or cost)
 - Ensure selected components meet performance requirements
+- Optimize selection based on user-defined criteria (mass or cost)
+
 
 ## 🏗️ Project Structure
 
