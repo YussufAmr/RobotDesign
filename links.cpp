@@ -6,17 +6,7 @@
 #include<limits>
 #include <cmath>
 
-links :: links(){
 
-int type;
-double base = 0;
-double height = 0;
-double radius = 0;
-double link_mass = 0;
-double pay_load_mass=  0;
-double max_angular_acc= 0;
-double required_omega = 0;
-}
 void links :: handling_invalid_inputs_types()
 {
            while(cin.fail())
