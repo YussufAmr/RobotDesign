@@ -9,29 +9,15 @@ using namespace std;
 
 motors :: motors()
     {
-    double torque = 0;
-    double rpm = 0 ;
-    double mass = 0;
-    double diameter = 0;
-    double width = 0;
-    double effeciency = 0;
-    int adding_choice = 0;
-    int x=0;
+  
 
+torques = {1.33, 3.6, 4.12, 4.53, 5.05, 5.09, 5.45, 6, 6.31, 6.9};
+rpms = {4980, 2430, 5770, 3400, 5450, 4590, 3530, 4510, 3550, 7380};
+masses = {34, 34, 26, 119, 42, 119, 26, 54, 54, 54};
+diameters = {19, 19, 14, 26, 16, 26, 16, 22, 22, 22};
+widths = {28.9, 28.9, 35.6, 44.7, 40.4, 44.7, 26.5, 31.9, 31.9, 31.9};
+effecencies = {0.72, 0.71, 0.76, 0.81, 0.82, 0.81, 0.76, 0.81, 0.81, 0.73};
 
- torques = {1.33, 3.6, 4.12, 4.53, 5.05, 5.09, 5.45, 6, 6.31, 6.9};
- rpms = {4980, 2430, 5770, 3400, 5450, 4590, 3530, 4510, 3550, 7380};
- masses = {34, 34, 26, 119, 42, 119, 26, 54, 54, 54};
- diameters = {19, 19, 14, 26, 16, 26, 16, 22, 22, 22};
- widths = {28.9, 28.9, 35.6, 44.7, 40.4, 44.7, 26.5, 31.9, 31.9, 31.9};
- effecencies = {0.72, 0.71, 0.76, 0.81, 0.82, 0.81, 0.76, 0.81, 0.81, 0.73};
-
-    double gear_ratio=0;
-    double max_gear_eff=0;
-    double gear_mass=0;
-    double gear_diameter=0;
-    double gear_width=0;
-    int gear_adding_choice=0;
 
 gear_ratios = {6,6.4,7,9.1,10, 12, 13, 15, 18, 22};
 max_gear_effs = {0.81,0.81,0.87,0.81,0.81, 0.81, 0.73, 0.73, 0.73, 0.73};
