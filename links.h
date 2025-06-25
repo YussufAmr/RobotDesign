@@ -40,7 +40,7 @@ double new_max_stress;
 public:
 void handling_invalid_inputs_types();
 
-links();
+
 void link_cross_section();
 void read_remaining_inputs();
 void calc_mass_link();
